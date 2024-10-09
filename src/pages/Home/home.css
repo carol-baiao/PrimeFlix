@@ -1,3 +1,9 @@
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .filme-list {
     width: 100%;
     padding: 24px;
