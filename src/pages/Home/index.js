@@ -9,7 +9,7 @@ function Home() {
 
     useEffect(() => {
         async function loadFilmes() {
-            const response = await api.get("movie/now_playing", {
+            const response = await api.get("movie/now_playing", { // api request 
                 params: {
                     api_key: "135fef96c7de1b86e0ac8f15d7cc0422",
                     language: "pt-BR",
@@ -17,14 +17,14 @@ function Home() {
                 }
             });
 
-            setFilmes(response.data.results.slice(0, 10));
-            setLoading(false);
+            setFilmes(response.data.results.slice(0, 10)); // appending 10 films 
+            setLoading(false); // 
         }
 
         loadFilmes();
     }, [])
 
-    if(loading) {
+    if(loading) { 
         return(
             <div className='loading'>
                 <h2>Carregando filmes...</h2>
@@ -33,7 +33,7 @@ function Home() {
     }
 
     return (
-            <div className='filme-list'>
+            <div className='filme-list'> 
                 {filmes.map((filme) => {
                     return(
                         <article key={filme.id}>
