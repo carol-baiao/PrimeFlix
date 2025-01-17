@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 
 import  api from '../../services/api';
 
+import Loading from '../../components/Loading';
 import './filme.css';
 
 function Filme() {
@@ -36,19 +37,28 @@ function Filme() {
 
     if(loading) {
         return(
-            <div className='filme-detail'>
-                <h2>Carregando detalhes do filme...</h2>
-            </div>
+            <Loading />
         );
     }
 
     return(
-        <div className='filme-detail'>
-            <h1>{filme.title}</h1>
-            <img src={`https://image.tmdb.org/t/p/original/${filme.backdrop_path}`} alt={filme.title}/>
-            <h3>Sinopse:</h3>
-            <span>{filme.overview}</span>
-            <strong>Avaliação: {filme.vote_average} / 10</strong>
+        <div className='filme-detail-page'>
+            <div className='filme-detail'>
+                <h1>{filme.title}</h1>
+                <div >
+                    <img src={`https://image.tmdb.org/t/p/original/${filme.backdrop_path}`} alt={filme.title} className='filme-detail-img'/>
+                </div>
+                <h3>Sinopse:</h3>
+                <span>{filme.overview}</span>
+                <strong>Avaliação: {filme.vote_average} / 10</strong>
+            </div>
+
+            <div className='area-buttons'>
+                <button>Salvar</button>
+                <button>
+                    <a href='#'>Trailer</a>
+                </button>
+            </div>
         </div>
     )
 }

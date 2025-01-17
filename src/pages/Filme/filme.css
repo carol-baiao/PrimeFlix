@@ -1,0 +1,53 @@
+.filme-detail-page {
+    max-width: 100vw;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    margin: 10px;
+}
+
+.filme-detail {
+    max-width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+    margin: 10px;
+}
+
+.filme-detail-img { 
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.area-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    width: 100%;
+}
+
+.area-buttons button {
+    font-size: 20px;
+    border: 0;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+.area-buttons button:hover {
+    background-color: #116FEB;
+    color: #fff;
+}
+
+.area-buttons a {
+    text-decoration: none;
+    color: #000;
+}
+
+.area-buttons a:hover {
+    color: #fff;
+}
