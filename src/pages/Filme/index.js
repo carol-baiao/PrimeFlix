@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 import  api from '../../services/api';
 
@@ -8,8 +8,11 @@ import './filme.css';
 
 function Filme() {
     const { id } = useParams(); //pegando id passado como parametro na url 
+    const navigate = useNavigate(); // pra quando o filme não for encontrado pela api
+
     const [filme, setFilme] = useState({});
     const [loading, setLoading] = useState(true);
+    
     
     useEffect(() => {
         async function loadFilme() {
@@ -23,8 +26,9 @@ function Filme() {
                 setFilme(response.data);
                 setLoading(false);
             }) //caso de sucesso da promise (get) - achou o filme
-            .catch((error) => { // não achou o filme 
-                setLoading(false);
+            .catch(() => { // não achou o filme 
+                navigate("/", { replace: true }); // caso não encontre o filme, joga o usuario pra home
+                return;
             })
         }
 
@@ -33,7 +37,26 @@ function Filme() {
         return () => { //para quando o componente for "desmontado"
 
         }
-    }, []);
+    }, [id, navigate] ); // id e navigate são dependencias externas pro useEffect funcionar aqui, logo passo pro useEffect as dependencias q uso
+
+    function salvarFilme() {
+        // salvando filme no local storage
+        const listaFilmes = localStorage.getItem('@primeflix');
+
+        let filmesSalvos = JSON.parse(listaFilmes) || []; /* tenta fazer a conversão do array de filmes pra JSON,
+        se não tiver nada no array, cria um novo */
+
+        const hasFilme = filmesSalvos.some( (filmeSalvo) => filmeSalvo.id === filme.id); // verifica se filme já foi existe no array
+
+        if(hasFilme) {
+            alert('Este filme já foi salvo anteriormente!');
+            return;
+        }
+
+        filmesSalvos.push(filme);
+        localStorage.setItem('@primeflix', JSON.stringify(filmesSalvos)); // transforma o array de filmes pra JSON e salva no local storage
+        alert('Filme salvo com sucesso!');
+    }
 
     if(loading) {
         return(
@@ -54,9 +77,9 @@ function Filme() {
             </div>
 
             <div className='area-buttons'>
-                <button>Salvar</button>
+                <button onClick={salvarFilme}>Salvar</button>
                 <button>
-                    <a href='#'>Trailer</a>
+                    <a target='blank' rel='external' href={`https://www.youtube.com/results?search_query=${filme.title} Trailer`}>Trailer</a>
                 </button>
             </div>
         </div>
