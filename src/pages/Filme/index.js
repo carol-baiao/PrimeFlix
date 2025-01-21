@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 import  api from '../../services/api';
 
+import { toast } from 'react-toastify';
 import Loading from '../../components/Loading';
 import './filme.css';
 
@@ -49,13 +50,13 @@ function Filme() {
         const hasFilme = filmesSalvos.some( (filmeSalvo) => filmeSalvo.id === filme.id); // verifica se filme já foi existe no array
 
         if(hasFilme) {
-            alert('Este filme já foi salvo anteriormente!');
+            toast.warn('Este filme já foi salvo anteriormente!');
             return;
         }
 
         filmesSalvos.push(filme);
         localStorage.setItem('@primeflix', JSON.stringify(filmesSalvos)); // transforma o array de filmes pra JSON e salva no local storage
-        alert('Filme salvo com sucesso!');
+        toast.success('Filme salvo com sucesso!');
     }
 
     if(loading) {
